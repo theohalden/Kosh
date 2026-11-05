@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- Preview starts with a copied ledger and never ingests live SMS. -->
+        <receiver android:name="dev.kosh.financetracker.data.sms.SmsReceiver"
+            android:enabled="false" />
+    </application>
+</manifest>

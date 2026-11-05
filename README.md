@@ -1,141 +1,92 @@
-<div align="center">
+# Tinward / Kosh monorepo
 
-# Kosh
+One repository for the native Android finance tracker and the Tinward marketing website. Tinward is the working marketing name; the Android app retains its existing Kosh identity, package IDs, signing setup and database.
 
-**Your money, understood. On your device.**
+## Repository layout
 
-A native Android personal finance tracker for Indian bank SMS and statements.
+```text
+apps/
+  android/              Independent Gradle project; open this in Android Studio
+    app/                Kotlin, Compose, Room, parsers and tests
+    gradle/             Gradle wrapper
+    sample-data/        Synthetic Android fixtures
+    gradlew
+    settings.gradle.kts
+    README.md
+  web/                  Next.js marketing website and early-access backend
+    src/                Pages, components, content and server routes
+    public/             Website assets
+    tests/              Sample-data and waitlist tests
+    supabase/           Waitlist SQL migrations
+    scripts/            Website-specific verification utilities
+    README.md
+scripts/
+  android.mjs           Root command adapter for the Android Gradle project
+docs/                   Shared project documentation and Android roadmap
+.github/workflows/      Separate Android and web validation jobs
+package.json            Root npm workspace and developer commands
+package-lock.json       Single JavaScript dependency lockfile
+```
 
-![Platform: Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white)
-![Language: Kotlin](https://img.shields.io/badge/Kotlin-1.9.22-7F52FF?logo=kotlin&logoColor=white)
-![UI: Jetpack Compose](https://img.shields.io/badge/UI-Jetpack_Compose-4285F4)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![Status: Early development](https://img.shields.io/badge/status-early_development-D4AF37)
+Each app owns its implementation and build configuration. npm workspaces manage the web dependencies; Gradle manages Android. There is no duplicated web project or ZIP source archive. Shared libraries should only be introduced when there is actual reusable code.
 
-</div>
+## Website: start here
 
-Kosh turns financial messages into a searchable transaction history, monthly spending summaries, and a queue for reviewing categories. Parsing, categorization, and storage happen on the device, without an account or cloud finance backend.
+Use Node.js 24 or newer and npm 11 or newer. `.node-version` selects Node 24 for CI.
 
-> **Development status:** Early development. Classification and reconciliation remain incomplete. Statement replacement is atomic and scoped to bank plus account suffix; broader account identity and cross-source reconciliation still need work.
+From the repository root:
 
-## What Kosh does
+```bash
+npm ci
+cp apps/web/.env.example apps/web/.env.local
+npm run dev
+```
 
-- **Import financial SMS:** scan existing messages and receive new messages through Android's SMS broadcast.
-- **Parse Indian bank formats:** dedicated HDFC, Kotak, and Slice parsers, plus a generic UPI fallback.
-- **Explore monthly activity:** income and expense summaries, category breakdowns, daily spending trends, and per-account debit/credit activity.
-- **Search your transaction trail:** browse transactions by date and filter the history.
-- **Review categories:** classify unresolved transactions and remember category choices for matching merchants.
-- **Understand the source:** inspect the original message and how a transaction was interpreted.
-- **Import bank statements:** experimental parsers for Kotak CSV, HDFC XLS, and Slice XLSX, with an import confirmation step.
+Open **http://localhost:3001**. Existing local configuration is preserved when upgrading this checkout; do not overwrite an existing `.env.local`.
 
-Parser coverage depends on the exact bank message or export format. This is not universal support for every SMS template or statement variant.
+The development waitlist uses temporary process memory and a local email outbox. It does not deliver external email. Production requires Supabase, Resend, real secrets and an explicitly configured site URL; see [apps/web/README.md](apps/web/README.md). No domain or production deployment is configured by this repository restructure.
 
-## A clearer view of your money
+## Android
 
-| Screen | Purpose |
+Install JDK 17, Android SDK platform 34 and build-tools 34. Configure `ANDROID_HOME` or create the ignored `apps/android/local.properties` with `sdk.dir` pointing to the SDK.
+
+Open **`apps/android`** in Android Studio. Android development does not require npm.
+
+```bash
+cd apps/android
+bash gradlew testDebugUnitTest lintDebug assembleDebug
+```
+
+From the repository root, the equivalent convenience command is:
+
+```bash
+npm run android:check
+```
+
+The debug APK is written to `apps/android/app/build/outputs/apk/debug/app-debug.apk`. Keep installed-device data safe: an in-place update requires the original signing key. Never uninstall or clear storage as a signing workaround. The separate Preview variant uses its own app ID.
+
+See [apps/android/README.md](apps/android/README.md) for features, permissions, data integrity and native setup. Automatic bank-message support remains regional; broader financial planning and wealth capabilities are not universally implemented.
+
+## Root commands
+
+| Command | Scope |
 | --- | --- |
-| Overview | Monthly summaries, category spending, recent activity, and account activity |
-| Trail | Searchable, filterable transaction history |
-| Insights | Spending trends and comparisons |
-| Review | Resolve uncategorized transactions |
-| Transaction detail | Inspect source data and edit the category |
+| `npm run dev` | Web development server on localhost:3001 |
+| `npm run check:web` | Web type checks, lint, tests, SQL migration checks and production build |
+| `npm run build:web` | Web production build |
+| `npm run android:check` | Android debug tests, lint and APK build |
+| `npm run android:preview` | Android Preview tests, lint and APK build |
 
-## Privacy and permissions
+Both Android commands pass through to the Gradle wrapper in `apps/android`. They inherit `JAVA_HOME` and Android SDK environment variables. On Windows, Android can also be built directly using `apps\android\gradlew.bat` from the Android project directory.
 
-- Transactions, source SMS text, and learned merchant categories are stored in a local Room database.
-- The app manifest requests **READ_SMS** for historical import and **RECEIVE_SMS** for live capture.
-- The app manifest declares no **INTERNET** permission. There is no finance-data upload or analytics integration in the current app code.
-- Android application backup is disabled.
-- The UI uses Google's downloadable Manrope font through Google Play services, with a system-font fallback. Font retrieval is separate from financial-data processing.
-- Local storage is not currently encrypted by Kosh. Device security still matters, and uninstalling the app normally removes its local data.
+## CI and contribution
 
-Keep real SMS, statements, account details, database exports, and signing credentials out of issues, screenshots, and commits.
+- [Android workflow](.github/workflows/android.yml): runs when the Android project or its workflow/adapter changes.
+- [Web workflow](.github/workflows/web.yml): installs from the root lockfile and verifies the web workspace when its sources, workspace configuration or workflow change.
+- [Contributing](CONTRIBUTING.md), [Android roadmap](docs/ROADMAP.md), [security policy](SECURITY.md).
 
-## Build and run
-
-### Requirements
-
-- Android Studio with JDK **17**.
-- Android SDK Platform **34** and the corresponding build tools.
-- An Android **8.0 / API 26** or newer device or emulator.
-- Network access for the initial Gradle and Maven dependency downloads.
-
-### Get the implementation
-
-Clone the repository and use the default `main` branch:
-
-```bash
-git clone https://github.com/itzzzzzzak/Kosh.git
-cd Kosh
-```
-
-Open the project in Android Studio, let Gradle sync, and run the `app` configuration. Android Studio can configure the SDK path in the untracked `local.properties` file.
-
-For a command-line build, configure `ANDROID_HOME` or `sdk.dir` in `local.properties`, then run:
-
-```bash
-bash gradlew testDebugUnitTest
-bash gradlew lintDebug
-bash gradlew assembleDebug
-```
-
-The debug APK is written to:
-
-```text
-app/build/outputs/apk/debug/app-debug.apk
-```
-
-On Windows, use `gradlew.bat` instead of `bash gradlew`.
-
-To install on a connected device with Android platform tools:
-
-```bash
-adb install -r app/build/outputs/apk/debug/app-debug.apk
-```
-
-Grant SMS permissions when prompted to use message import and live capture. Statement imports use Android's document picker.
-
-## Architecture
-
-Kosh uses Kotlin, Jetpack Compose, Material 3, Navigation Compose, Hilt, coroutines/Flow, and Room. HDFC XLS import uses Apache POI; Slice XLSX import reads worksheet XML from the ZIP container.
-
-The main data path is:
-
-**SMS or statement → bank parser → transaction mapping → local repository → categorization and transfer reconciliation → Compose UI**
-
-```text
-app/src/main/kotlin/dev/kosh/financetracker/
-  core/          Models, SMS parsers, statement parsers, classifiers, finance calculations
-  data/          Room entities and DAOs, repository, SMS reader and receiver
-  di/            Dependency injection
-  feature/       Overview, Trail, Insights, Review, detail, sync, statement import
-  navigation/    Destinations and shared navigation state
-  ui/            Components, theme, and rupee formatting
-```
-
-Money is represented using `BigDecimal`. SMS source identifiers support idempotent rescans of the same message; this does not provide full cross-source deduplication.
-
-## Known limitations
-
-- **Statement import boundaries:** replacement and reconciliation run in one database transaction. Only records with a matching bank and account suffix in the imported date range are replaced. Records without a known bank are preserved. Two accounts at the same bank with identical suffixes cannot yet be distinguished.
-- **Transfer detection is heuristic:** matching amount, direction, timing, and account suffix does not prove both accounts belong to the user.
-- **Classification is incomplete:** debits generally become expenses; salary heuristics identify some income. EMI, investment, refund, and credit-card-payment semantics need further work.
-- **Cross-source reconciliation is incomplete:** statement import followed by an SMS rescan can bring back overlapping transactions.
-- **Statement row identity:** identifiers use a hash of row fields plus an occurrence counter, preserving rows with missing/repeated references and exact duplicates on repeated import.
-- **Import robustness needs work:** malformed or oversized files need stricter handling and parser limits.
-- **Database upgrades need migrations:** the current configuration allows destructive migration.
-- **Automated validation:** GitHub Actions runs unit tests (including Room database regression tests), Android lint, and the debug build. Prior PR notes report device testing; device behavior still needs separate validation.
-
-See the [roadmap](docs/ROADMAP.md) for the next engineering priorities. Treat app totals as experimental and verify them against bank records.
-
-## Contributing
-
-Read [CONTRIBUTING.md](CONTRIBUTING.md) for setup, test expectations, and privacy-safe fixtures. Focused fixes and reproducible reports are welcome.
-
-For vulnerabilities or financial-data exposure, follow [SECURITY.md](SECURITY.md).
+The public site uses synthetic financial examples. Keep real messages, bank statements, device databases, secrets, SDK paths and signing keys out of commits. Local caches, generated outputs and environment files are ignored.
 
 ## License
 
-Kosh is licensed under the [MIT License](LICENSE).
-
-Third-party dependencies retain their respective licenses.
+[MIT](LICENSE). Third-party dependencies retain their respective licenses.

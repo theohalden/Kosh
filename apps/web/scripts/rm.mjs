@@ -1,0 +1,10 @@
+import { chromium } from "playwright";
+const b = await chromium.launch({ channel: "chrome" });
+const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+const p = await ctx.newPage();
+await p.goto("http://localhost:3001", { waitUntil: "networkidle" });
+await p.waitForTimeout(800);
+const info = await p.evaluate(() => ({ trackH: document.querySelector(".hero-track").offsetHeight, vh: innerHeight, h1Transform: getComputedStyle(document.querySelector(".hero-h1 .mask > span")).transform, rawDisplay: getComputedStyle(document.querySelector(".raw")).display }));
+console.log("reduced-motion:", JSON.stringify(info));
+await p.screenshot({ path: "shots/rm-hero.png" });
+await b.close();

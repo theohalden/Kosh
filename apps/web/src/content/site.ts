@@ -1,0 +1,14 @@
+export const REPO_URL = "https://github.com/theohalden/Kosh";
+export const SITE_NAME = "Tinward";
+export { PRICING } from "./pricing";
+export const FAQS: { q: string; a: string }[] = [
+  { q: "What is Tinward?", a: "A personal finance app being built to bring spending, income and your wider financial picture together. The Android app currently focuses on transactions and categories. Budgets, manual investment tracking and net worth are in development." },
+  { q: "Can I use it where I live?", a: "You can join the early-access list from anywhere. That does not mean every bank or country is supported. Current automatic message parsing is limited to selected Indian formats: HDFC, Kotak, Slice and a general UPI format. Statement imports also support specific formats. Broader regional coverage is an ambition, not a working worldwide integration." },
+  { q: "Is Tinward available now?", a: "There is no public download yet. The Android app is in early development. We will invite confirmed subscribers when a tested beta is ready; there is no promised launch date." },
+  { q: "What will it cost?", a: "Joining early access is free. We are considering a free plan and an optional Plus plan, but features and prices are not final. Regional prices will be published when they are configured. There is no checkout and no payment is requested." },
+  { q: "How does automatic tracking work?", a: "With permission, the Android app reads supported transaction messages locally and extracts the amount, date and account. Matching debit and credit references help identify transfers. Some messages are not recognised and some purposes need review, so verify totals against bank records. It does not connect to banks worldwide." },
+  { q: "What stays on my device?", a: "In the current Android app, transactions, original messages and learned categories live in a local database. The app does not request internet permission and has no financial-data upload or analytics integration. This website separately collects the information you enter in the early-access form." },
+  { q: "Can I track investments and net worth?", a: "These are planned capabilities. The intended approach is manual: record stocks, funds, retirement accounts and other assets, then update their values yourself. Broker connections and live market prices are not implemented." },
+  { q: "Which devices will it support?", a: "The current project is built for Android 8.0 and newer. There is no iOS release or web finance dashboard. The interactive screens here show synthetic examples, including planned functionality." },
+  { q: "How will my invitation arrive?", a: "By email, after you confirm your address. Product news is optional and separate from your invitation. You can unsubscribe or request deletion of your signup details at any time." },
+];

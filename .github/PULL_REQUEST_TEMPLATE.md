@@ -6,9 +6,8 @@ Describe what fails or is missing and how this change fixes it.
 
 List the checks actually run and their results. Mark any blocked checks explicitly.
 
-- Unit tests:
-- Android lint:
-- Debug build:
+- Web checks (if changed):
+- Android unit tests/lint/build (if changed):
 - Device checks, if relevant:
 
 ## Data integrity and privacy

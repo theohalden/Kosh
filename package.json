@@ -1,0 +1,32 @@
+{
+  "name": "tinward-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.17.0",
+  "engines": {
+    "node": ">=24",
+    "npm": ">=11"
+  },
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "npm run dev:web",
+    "dev:web": "npm run dev --workspace @tinward/web",
+    "build": "npm run build:web",
+    "build:web": "npm run build --workspace @tinward/web",
+    "start:web": "npm run start --workspace @tinward/web -- --hostname 127.0.0.1 --port 3001",
+    "lint": "npm run lint --workspace @tinward/web",
+    "typecheck": "npm run typecheck --workspace @tinward/web",
+    "test": "npm run test:web",
+    "test:web": "npm run test --workspace @tinward/web",
+    "test:web:db": "npm run test:db --workspace @tinward/web",
+    "check:web": "npm run typecheck && npm run lint && npm run test:web && npm run test:web:db && npm run build:web",
+    "android:test": "node scripts/android.mjs testDebugUnitTest",
+    "android:lint": "node scripts/android.mjs lintDebug",
+    "android:build": "node scripts/android.mjs assembleDebug",
+    "android:check": "node scripts/android.mjs testDebugUnitTest lintDebug assembleDebug",
+    "android:preview": "node scripts/android.mjs testPreviewUnitTest lintPreview assemblePreview"
+  }
+}
