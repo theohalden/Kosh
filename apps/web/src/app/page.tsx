@@ -39,7 +39,7 @@ export default function Home() {
         <HowItWorks />
         <Privacy />
         <Pricing />
-        <EarlyAccess />
+        <EarlyAccess enabled={process.env.TINWARD_STATIC_EXPORT !== "1"} />
         <Faq />
       </main>
       <Footer />

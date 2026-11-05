@@ -27,6 +27,7 @@
     "android:lint": "node scripts/android.mjs lintDebug",
     "android:build": "node scripts/android.mjs assembleDebug",
     "android:check": "node scripts/android.mjs testDebugUnitTest lintDebug assembleDebug",
-    "android:preview": "node scripts/android.mjs testPreviewUnitTest lintPreview assemblePreview"
+    "android:preview": "node scripts/android.mjs testPreviewUnitTest lintPreview assemblePreview",
+    "build:static": "node scripts/build-static.mjs"
   }
 }

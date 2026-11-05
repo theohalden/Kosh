@@ -12,7 +12,7 @@ type State =
 
 const EMAIL_HINT = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-export function EarlyAccess() {
+export function EarlyAccess({ enabled = true }: { enabled?: boolean }) {
   const id = useId();
   const [state, setState] = useState<State>({ kind: "idle" });
   const [email, setEmail] = useState("");
@@ -51,6 +51,17 @@ export function EarlyAccess() {
 
   const loading = state.kind === "loading";
   const done = state.kind === "success" || state.kind === "duplicate";
+
+  if (!enabled) return (
+    <section id="early-access" className="on-ink bg-ink text-paper" aria-labelledby="ea-h">
+      <div className="shell section">
+        <span className="eyebrow !text-paper/60">Early access</span>
+        <h2 id="ea-h" className="h2 mt-6">A clearer picture is taking shape.</h2>
+        <p className="mt-6 max-w-xl text-paper/75">Email signup is temporarily unavailable on this preview. We aren’t collecting email addresses or sending invitations here yet. You can download the early Android app today.</p>
+        <a href="#download" className="btn btn-primary mt-8">Get the Android APK <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+  );
 
   return (
     <section id="early-access" className="on-ink relative isolate overflow-hidden bg-ink text-paper" aria-labelledby="ea-h">
