@@ -1,0 +1,29 @@
+name: tinward
+services:
+  web:
+    image: ${TINWARD_IMAGE:?Set TINWARD_IMAGE to an immutable release tag}
+    build:
+      context: ${TINWARD_SOURCE:-./source}
+      dockerfile: deploy/sites/tinward/Dockerfile
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
+    restart: unless-stopped
+    user: "101:101"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m,uid=101,gid=101,mode=1770
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 64
+    mem_limit: 96m
+    cpus: 0.50
+    networks:
+      proxy:
+        aliases: [tinward-web]
+    logging:
+      driver: json-file
+      options: {max-size: "5m", max-file: "2"}
+networks:
+  proxy:
+    external: true
+    name: web-proxy

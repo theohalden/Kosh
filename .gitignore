@@ -29,3 +29,9 @@ node_modules/
 *.tsbuildinfo
 next-env.d.ts
 .dev-data/
+
+# Isolated marketing-only static export.
+.static-site/
+
+# Host-specific infrastructure notes must remain private.
+.private-deployment/
