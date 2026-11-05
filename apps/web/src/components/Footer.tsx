@@ -10,12 +10,12 @@ export function Footer() {
           <div>
             <Logo />
             <p className="display mt-5 max-w-xs text-2xl font-medium leading-tight text-paper/90">Your money. In perspective.</p>
-            <p className="mt-4 max-w-xs text-sm text-paper/60">A clearer picture of your financial life. Early development. Android beta coming soon.</p>
+            <p className="mt-4 max-w-xs text-sm text-paper/60">A clearer picture of your financial life. Early development. Early Android APK available.</p>
           </div>
           <nav aria-label="Footer">
             <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-paper/50">Explore</p>
             <ul className="mt-4 grid gap-1">
-              {[["Product", "/#product"], ["Features", "/#features"], ["How it works", "/#how"], ["Pricing", "/#pricing"], ["FAQ", "/#faq"], ["Early access", "/#early-access"]].map(([l, h]) => (
+              {[["Download APK", "/#download"], ["Product", "/#product"], ["Features", "/#features"], ["How it works", "/#how"], ["Pricing", "/#pricing"], ["FAQ", "/#faq"], ["Early access", "/#early-access"]].map(([l, h]) => (
                 <li key={h}><a href={h} className="inline-flex min-h-10 items-center text-paper/85 no-underline hover:text-coral-soft">{l}</a></li>
               ))}
             </ul>

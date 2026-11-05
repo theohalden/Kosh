@@ -17,7 +17,7 @@ export default function OgImage() {
             <span>All your money.</span>
             <span style={{ color: "#b8801f" }}>In perspective.</span>
           </div>
-          <div style={{ fontSize: 30, color: "#3d5659" }}>Android beta coming soon · Early access open</div>
+          <div style={{ fontSize: 30, color: "#3d5659" }}>Early Android APK available · Android 8.0+</div>
         </div>
         <div style={{ position: "absolute", right: 70, top: 70, width: 300, height: 490, borderRadius: 48, background: "#0b0d0f", display: "flex", flexDirection: "column", padding: 28, color: "#f7f5f0" }}>
           <div style={{ fontSize: 22, color: "#b9b6b1" }}>Spent in November</div>

@@ -11,8 +11,8 @@ export function Hero() {
         <h1 id="hero-heading" className="hero-heading">All your money.<br/><em>In perspective.</em></h1>
         <p className="hero-sub">Less piecing it together.<br className="hero-break"/> More knowing where you stand.</p>
         <p className="hero-description">We’re building one place for your spending, income, investments and goals. A clearer picture, starting with your everyday money.</p>
-        <div className="hero-actions"><a href="#early-access" className="btn btn-primary">Join early access <span className="cta-arrow" aria-hidden="true">↗</span></a><a href="#product" className="hero-link">Explore Tinward <span aria-hidden="true">↓</span></a></div>
-        <p className="hero-note"><span aria-hidden="true"/>Android in development · Free to join</p>
+        <div className="hero-actions"><a href="#download" className="btn btn-primary">Download for Android <span className="cta-arrow" aria-hidden="true">↗</span></a><a href="#product" className="hero-link">Explore Tinward <span aria-hidden="true">↓</span></a></div>
+        <p className="hero-note"><span aria-hidden="true"/>Android 8.0+ · Early APK available</p>
       </div>
       <div className="hero-product">
         <span className="hero-orbit orbit-a" aria-hidden="true"/><span className="hero-orbit orbit-b" aria-hidden="true"/>

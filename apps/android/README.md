@@ -141,3 +141,30 @@ For vulnerabilities or financial-data exposure, follow [SECURITY.md](../../SECUR
 Kosh is licensed under the [MIT License](../../LICENSE).
 
 Third-party dependencies retain their respective licenses.
+
+## Signed APK distribution
+
+The public early release is [v0.2.0](https://github.com/theohalden/Kosh/releases/tag/v0.2.0).
+It uses the standard `dev.kosh.financetracker` application ID, version code 2,
+and a dedicated release certificate. It is not the debug or Preview build.
+Android 8.0 or newer is required.
+
+To build a signed release, supply `KOSH_KEYSTORE_PATH`,
+`KOSH_KEYSTORE_PASSWORD`, `KOSH_KEY_ALIAS`, and `KOSH_KEY_PASSWORD` through
+private environment variables, then run from `apps/android`:
+
+```bash
+bash gradlew testReleaseUnitTest lintRelease assembleRelease
+```
+
+Without signing variables, Gradle produces an unsigned release APK; do not
+publish it. Verify the signed APK with Android build-tools `apksigner verify
+--verbose --print-certs`, and publish a SHA-256 checksum alongside the APK.
+Keep the keystore and passwords backed up privately: all future updates must
+use the same certificate and an increased version code. The local `.signing/`
+directory is ignored and must never be committed or attached to a release.
+
+The v0.1.0 signing key is unavailable. v0.2.0 cannot update installations signed
+with that older key. **Do not uninstall an existing app to bypass a signature
+error: uninstalling removes its local financial data.** No automatic data
+migration between differently signed installations is provided.

@@ -1,7 +1,7 @@
 import { Reveal } from "../Reveal";
 
 const STEPS = [
-  { n: "01", title: "Get your invitation", body: "When the Android beta opens, we’ll email you. There’s no download yet, and we won’t offer one until a properly tested release exists." },
+  { n: "01", title: "Download the Android app", body: "Get the early Kosh APK from the download section. You need Android 8.0 or newer. Read the existing-user warning before attempting an update." },
   { n: "02", title: "Let Tinward read, or import", body: "Import a supported statement, allow supported message access, or add a transaction manually. Format coverage is limited; not every bank or region is supported." },
   { n: "03", title: "Settle the few it’s unsure about", body: "Tinward files what it recognises. Uncertain purposes and categories need review. Choose a category once and it sticks for that merchant." },
   { n: "04", title: "Watch the month make sense", body: "Follow your spending as it happens. Planning, investments and net worth join as those features arrive." },

@@ -25,12 +25,12 @@ export function Nav() {
       <nav aria-label="Primary" className="shell nav-inner">
         <Link href="/#top" aria-label="Tinward home" className="nav-brand"><Logo /></Link>
         <ul className="nav-links">{LINKS.map(l => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul>
-        <a href="#early-access" className="btn btn-primary nav-cta">Join early access <span aria-hidden="true">↗</span></a>
+        <a href="#download" className="btn btn-primary nav-cta">Download for Android <span aria-hidden="true">↗</span></a>
         <button ref={toggle} type="button" className="menu-toggle" aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"}>
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">{open ? <path d="m5 5 12 12M17 5 5 17"/> : <path d="M3 7h16M3 15h16"/>}</svg>
         </button>
       </nav>
-      {open && <div id="mobile-menu" className="shell mobile-menu"><ul>{LINKS.map(l => <li key={l.href}><a href={l.href} onClick={() => setOpen(false)}>{l.label}<span aria-hidden="true">↗</span></a></li>)}</ul><a href="#early-access" onClick={() => setOpen(false)} className="btn btn-primary">Join early access <span aria-hidden="true">↗</span></a></div>}
+      {open && <div id="mobile-menu" className="shell mobile-menu"><ul>{LINKS.map(l => <li key={l.href}><a href={l.href} onClick={() => setOpen(false)}>{l.label}<span aria-hidden="true">↗</span></a></li>)}</ul><a href="#download" onClick={() => setOpen(false)} className="btn btn-primary">Download for Android <span aria-hidden="true">↗</span></a></div>}
     </header>
   );
 }

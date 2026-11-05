@@ -9,6 +9,7 @@ captures/
 local.properties
 *.apk
 *.keystore
+.signing/
 !debug.keystore
 
 # Never commit pulled device data — may contain real personal financial info.
