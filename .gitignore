@@ -1,9 +1,9 @@
 *.iml
 .gradle/
-/.idea/
+.idea/
 .DS_Store
 build/
-/captures
+captures/
 .externalNativeBuild
 .cxx
 local.properties
@@ -18,3 +18,13 @@ local.properties
 /*.png
 /*.log
 /*.txt
+
+# JavaScript workspace outputs and local configuration.
+node_modules/
+.next/
+.env
+.env.local
+.env.*.local
+*.tsbuildinfo
+next-env.d.ts
+.dev-data/

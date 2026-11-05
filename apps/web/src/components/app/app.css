@@ -1,0 +1,95 @@
+/* Tinward product UI. Everything is sized in cqw (1cqw = 1% of the phone's width), so a screen is
+   pixel-identical whether it renders 190px wide in the hero or 380px wide in the showcase.
+   Palette = the real Android app (Color.kt): graphite surfaces, warm off-white text, gold accent. */
+.ui-phone { container-type: inline-size; position: relative; width: 100%; aspect-ratio: 9 / 19.2; border-radius: 11.5% / 5.4%;
+  background: linear-gradient(160deg, #6a6f6e 0%, #1b1e1f 16%, #0b0c0d 58%, #2d3132 100%);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.07), 0 60px 80px -34px rgb(18 20 18 / 0.5), 0 22px 34px -20px rgb(18 20 18 / 0.4); }
+.ui-phone::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: inset 0 0 0 0.3cqw rgb(255 255 255 / 0.1); background: linear-gradient(112deg, rgb(255 255 255 / 0.09) 0%, transparent 26%); }
+.ui-phone-in { position: absolute; inset: 1.5cqw; border-radius: 10cqw; overflow: hidden; background: #0b0d0f; color: #f7f5f0; font-family: var(--font-sans); font-size: 3.4cqw; line-height: 1.25; display: flex; flex-direction: column; }
+.ui-cam { position: absolute; z-index: 6; top: 3.3cqw; left: 50%; width: 3.8cqw; height: 3.8cqw; margin-left: -1.9cqw; border-radius: 99px; background: #000; box-shadow: 0 0 0 0.5cqw #121516; }
+
+.ui-status { flex: none; height: 9.6cqw; display: flex; align-items: center; justify-content: space-between; padding: 1cqw 7.2cqw 0 8cqw; font-size: 3cqw; font-weight: 700; letter-spacing: 0.01em; }
+.ui-status .sys { display: flex; gap: 1.5cqw; align-items: center; }
+.ui-status svg { width: 3.4cqw; height: 3.4cqw; fill: currentColor; }
+.ui-body { flex: 1; min-height: 0; position: relative; overflow: hidden; padding: 0 5.6cqw; }
+.ui-gesture { flex: none; height: 4.6cqw; display: grid; place-items: center; background: #101214; }
+.ui-gesture i { width: 28cqw; height: 1.1cqw; border-radius: 9px; background: #f7f5f0; opacity: 0.85; }
+
+.ui-nav { flex: none; height: 15.6cqw; display: grid; grid-template-columns: repeat(4, 1fr); align-items: start; padding-top: 2.4cqw; background: #101214; border-top: 0.25cqw solid #1f2224; }
+.ui-nav a, .ui-nav span.i { display: flex; flex-direction: column; align-items: center; gap: 1cqw; color: #9b9893; font-size: 2.65cqw; font-weight: 600; text-decoration: none; }
+.ui-nav .pill { width: 11.4cqw; height: 6.2cqw; border-radius: 99px; display: grid; place-items: center; transition: background 0.3s; }
+.ui-nav svg { width: 4.6cqw; height: 4.6cqw; }
+.ui-nav [aria-current="true"] { color: #f7f5f0; }
+.ui-nav [aria-current="true"] .pill { background: #3a3224; color: #d5a64f; }
+
+/* typography */
+.ui-bar { display: flex; align-items: center; justify-content: space-between; height: 12cqw; flex: none; }
+.ui-brand { font-weight: 800; font-size: 5cqw; letter-spacing: -0.04em; display: flex; align-items: center; gap: 1.4cqw; }
+.ui-brand i { width: 2.2cqw; height: 2.2cqw; border-radius: 99px; background: #d5a64f; }
+.ui-title { font-weight: 800; font-size: 5.6cqw; letter-spacing: -0.035em; }
+.ui-month { display: inline-flex; align-items: center; gap: 1.2cqw; height: 7.6cqw; padding: 0 3cqw; border-radius: 99px; background: #1b1d1f; color: #cfccc6; font-size: 2.9cqw; font-weight: 700; }
+.ui-month svg { width: 3.2cqw; height: 3.2cqw; }
+.ui-eyebrow { font-size: 2.85cqw; font-weight: 600; color: #a8a5a0; letter-spacing: 0.01em; }
+.ui-num { font-weight: 700; letter-spacing: -0.045em; font-variant-numeric: tabular-nums lining-nums; line-height: 1.02; }
+.ui-num.xl { font-size: 12.4cqw; }
+.ui-num.lg { font-size: 9.4cqw; }
+.ui-cap { font-size: 2.85cqw; color: #a8a5a0; font-weight: 500; }
+.ui-pos { color: #b7d5ae; }
+.ui-dim { color: #a8a5a0; }
+
+/* segmented bar + legend */
+.ui-seg { display: flex; gap: 0.6cqw; height: 2.8cqw; margin: 4.4cqw 0 2.6cqw; }
+.ui-seg i { display: block; height: 100%; border-radius: 99px; transform-origin: left; transform: scaleX(var(--k, 1)); min-width: 1.4cqw; }
+.ui-legend { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; }
+.ui-legend div { display: grid; gap: 0.4cqw; }
+.ui-legend small { display: flex; align-items: center; gap: 1.2cqw; font-size: 2.55cqw; color: #a8a5a0; font-weight: 600; }
+.ui-legend small::before { content: ""; width: 1.7cqw; height: 1.7cqw; border-radius: 99px; background: var(--c); }
+.ui-legend b { font-size: 3.4cqw; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+
+/* sections & rows */
+.ui-sec { display: flex; justify-content: space-between; align-items: baseline; margin: 5.2cqw 0 0.6cqw; }
+.ui-sec h4 { font-family: var(--font-sans); font-size: 3.5cqw; font-weight: 800; letter-spacing: -0.01em; }
+.ui-sec span { font-size: 2.8cqw; font-weight: 700; color: #d5a64f; }
+.ui-row { display: flex; align-items: center; gap: 3cqw; padding: 2.15cqw 0; position: relative; }
+.ui-row + .ui-row::before { content: ""; position: absolute; left: 12.4cqw; right: 0; top: 0; border-top: 0.25cqw solid #1f2224; }
+.ui-tile { width: 9.4cqw; height: 9.4cqw; border-radius: 3.2cqw; background: #1b1d1f; color: #d8d5cf; display: grid; place-items: center; flex: none; }
+.ui-tile svg { width: 4.7cqw; height: 4.7cqw; }
+.ui-tile.date { display: block; text-align: center; padding-top: 1.45cqw; line-height: 1; }
+.ui-tile.date b { display: block; font-size: 3.7cqw; font-weight: 800; color: #f7f5f0; }
+.ui-tile.date small { display: block; font-size: 2cqw; font-weight: 700; letter-spacing: 0.08em; color: #a8a5a0; margin-top: 0.5cqw; }
+.ui-tile.in { background: #232b21; color: #b7d5ae; }
+.ui-tile.tr { background: #1f2224; color: #a8a5a0; }
+.ui-main { flex: 1; min-width: 0; }
+.ui-main strong { display: block; font-size: 3.5cqw; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ui-main span { display: block; font-size: 2.65cqw; color: #a8a5a0; margin-top: 0.5cqw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ui-amt { font-size: 3.5cqw; font-weight: 700; font-variant-numeric: tabular-nums lining-nums; letter-spacing: -0.02em; text-align: right; }
+.ui-amt small { display: block; font-size: 2.4cqw; font-weight: 600; color: #a8a5a0; margin-top: 0.4cqw; letter-spacing: 0; }
+
+/* activity */
+.ui-search { display: flex; align-items: center; gap: 2.4cqw; height: 10.4cqw; border-radius: 99px; background: #1b1d1f; padding: 0 3.6cqw; color: #a8a5a0; font-size: 3.1cqw; font-weight: 500; }
+.ui-search svg { width: 4.4cqw; height: 4.4cqw; flex: none; }
+.ui-chips { display: flex; gap: 2cqw; margin: 3.2cqw 0 1cqw; align-items: center; }
+.ui-chip { height: 7.4cqw; display: inline-flex; align-items: center; padding: 0 3.2cqw; border-radius: 99px; border: 0.3cqw solid #2c2f31; font-size: 2.85cqw; font-weight: 700; color: #cfccc6; white-space: nowrap; }
+.ui-chip.on { background: #f7f5f0; color: #0b0d0f; border-color: transparent; }
+.ui-chips .f { margin-left: auto; width: 7.4cqw; height: 7.4cqw; border-radius: 99px; background: #1b1d1f; display: grid; place-items: center; flex: none; color: #cfccc6; }
+.ui-chips .f svg { width: 3.8cqw; height: 3.8cqw; }
+.ui-day { display: flex; justify-content: space-between; font-size: 2.6cqw; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #8d8a85; margin: 4cqw 0 0.4cqw; }
+
+/* plan */
+.ui-prog { height: 1.1cqw; border-radius: 9px; background: #232628; overflow: hidden; margin-top: 1.5cqw; }
+.ui-prog i { display: block; height: 100%; border-radius: inherit; background: var(--c); transform-origin: left; transform: scaleX(var(--k, 1)); }
+.ui-plan-row { padding: 2.1cqw 0; }
+.ui-plan-row .top { display: flex; justify-content: space-between; align-items: baseline; font-size: 3.3cqw; font-weight: 700; }
+.ui-plan-row .top span { font-size: 2.7cqw; font-weight: 600; color: #a8a5a0; font-variant-numeric: tabular-nums; }
+.ui-callout { display: flex; justify-content: space-between; align-items: center; margin-top: 4cqw; padding: 3.4cqw 3.8cqw; border-radius: 4cqw; background: #151c16; }
+.ui-callout b { font-size: 5cqw; font-weight: 800; letter-spacing: -0.03em; color: #b7d5ae; font-variant-numeric: tabular-nums; }
+.ui-callout span { font-size: 2.8cqw; font-weight: 600; color: #a8a5a0; }
+
+/* wealth */
+.ui-chart { width: 100%; height: auto; display: block; margin-top: 3.6cqw; overflow: visible; }
+.ui-chart .ln { fill: none; stroke: #f7f5f0; stroke-width: 0.9; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--k, 1)); }
+.ui-chart text { font: 600 4px var(--font-sans); fill: #8d8a85; }
+.ui-chart .pt { fill: #d5a64f; opacity: var(--k, 1); }
+
+/* Sharpen hierarchy while retaining a single Android design language. */
+.ui-num{font-weight:650;}.ui-main strong{font-weight:600;}.ui-row{gap:2.6cqw;}.ui-nav .pill{transition:background 200ms;}.ui-amt{flex-shrink:0;}.ui-chart text{fill:#b9b6b1;}.ui-eyebrow,.ui-cap,.ui-main span{color:#b9b6b1;}

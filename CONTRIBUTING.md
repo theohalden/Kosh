@@ -1,6 +1,6 @@
 # Contributing to Kosh
 
-Kosh is a native Android app in early development. The implementation is on `main`; check open pull requests before starting overlapping work.
+This monorepo contains the Kosh Android app (`apps/android`) and Tinward website (`apps/web`), both in early development. The implementation is on `main`; check open pull requests before starting overlapping work.
 
 ## Development workflow
 
@@ -8,7 +8,7 @@ Kosh is a native Android app in early development. The implementation is on `mai
 2. Create a feature branch from the latest `main`.
 3. Make a focused change with a clear user-visible outcome.
 4. For behavior changes, add a regression test that fails before the fix.
-5. Run the relevant unit tests, Android lint, and debug build.
+5. Run the checks for the app you changed. Changes affecting both apps need both checks.
 6. Open a pull request describing the problem, the change, validation, and remaining limitations.
 
 Do not commit device databases, real bank exports, raw personal SMS, credentials, signing keys, APKs, or local SDK settings.
@@ -16,10 +16,11 @@ Do not commit device databases, real bank exports, raw personal SMS, credentials
 ## Validation
 
 ```bash
-bash gradlew testDebugUnitTest
-bash gradlew lintDebug
-bash gradlew assembleDebug
+npm run check:web
+npm run android:check
 ```
+
+The commands above run from the repository root. Android requires JDK 17 and the Android SDK; `cd apps/android` and run the Gradle wrapper directly if you do not use npm. Website dependencies use the root npm lockfile only.
 
 Record what actually ran and the outcome. If a command is blocked by the environment, state that explicitly. Device behavior must be verified separately; JVM tests alone do not prove SMS permissions, broadcast delivery, document picking, or database migration behavior.
 

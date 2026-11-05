@@ -1,5 +1,7 @@
 # Kosh engineering roadmap
 
+The native application lives in `apps/android`; the Tinward marketing site is in `apps/web`. This roadmap covers Android functionality.
+
 This roadmap tracks the implementation on `main` and its import-integrity fixes. It distinguishes existing code from work still required.
 
 ## Existing implementation
@@ -27,7 +29,8 @@ These checkboxes mean code exists; they do not imply current build validation or
 
 ## 2. Make financial totals dependable
 
-- [ ] Reconcile overlapping SMS and statement imports across repeated scans.
+- [x] Retain original observations and conservatively link SMS/statement sources across repeated imports.
+- [ ] Resolve ambiguous source matches and broaden notification coverage.
 - [ ] Add an explicit owned-account model before treating heuristically paired entries as self-transfers.
 - [ ] Distinguish spending, income, EMI, investments, refunds, and credit-card settlements.
 - [ ] Improve merchant normalization without overwriting user corrections.
@@ -35,7 +38,8 @@ These checkboxes mean code exists; they do not imply current build validation or
 
 ## 3. Protect local data
 
-- [ ] Replace destructive migration fallback with tested schema migrations.
+- [x] Replace destructive migration fallback with an explicit schema 7-to-8 migration, validated on a disposable database copy.
+- [ ] Define upgrade paths for older schemas.
 - [ ] Define export, backup, restore, and deletion behavior.
 - [ ] Evaluate database encryption and key management.
 - [ ] Audit logs, dependencies, permissions, and source-text retention.
