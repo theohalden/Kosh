@@ -7,8 +7,8 @@ export function Faq() {
       <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
         <div>
           <Reveal><span className="eyebrow">FAQ</span></Reveal>
-          <Reveal delay={80}><h2 id="faq-h" className="h2 mt-5">Straight answers.</h2></Reveal>
-          <Reveal delay={160}><p className="lead mt-6">Including the unglamorous ones: what&apos;s built, what&apos;s not, and what we don&apos;t know yet.</p></Reveal>
+          <Reveal delay={80}><h2 id="faq-h" className="h2 mt-5">Good questions deserve clear answers.</h2></Reveal>
+          <Reveal delay={160}><p className="lead mt-6">Including what&apos;s built, what&apos;s not, and what we don&apos;t know yet.</p></Reveal>
         </div>
         <div className="border-t-2 border-ink">
           {FAQS.map((f) => (

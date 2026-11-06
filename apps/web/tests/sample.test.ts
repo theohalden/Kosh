@@ -45,6 +45,6 @@ describe("illustrative figures stay internally consistent", () => {
     expect(PRICING.checkoutEnabled).toBe(false);
     expect(PRICING.markets).toEqual([]);
     expect(PRICING.plans.free.name).toBe("Tinward Free");
-    expect(PRICING.plans.plus.features).toContain("Manual investment tracking");
+    expect(PRICING.plans.plus.features).toContain("Additional planning tools");
   });
 });

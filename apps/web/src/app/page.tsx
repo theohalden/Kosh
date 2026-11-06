@@ -1,11 +1,13 @@
+import { MarketInit } from "@/components/MarketInit";
+import { Intro } from "@/components/Intro";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/hero/Hero";
 import { Problem } from "@/components/sections/Problem";
 import { Showcase } from "@/components/sections/Showcase";
 import { SmsTracking } from "@/components/sections/SmsTracking";
+import { Insights } from "@/components/sections/Insights";
 import { SalaryBudget } from "@/components/sections/SalaryBudget";
-import { Wealth } from "@/components/sections/Wealth";
 import { NetWorth } from "@/components/sections/NetWorth";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Privacy } from "@/components/sections/Privacy";
@@ -25,14 +27,16 @@ const jsonLd = {
 export default function Home() {
   return (
     <>
+      <MarketInit />
+      <Intro />
       <Nav />
       <main id="main" tabIndex={-1} className="focus:outline-none">
         <Hero />
         <Problem />
         <Showcase />
         <SmsTracking />
+        <Insights />
         <SalaryBudget />
-        <Wealth />
         <NetWorth />
         <HowItWorks />
         <Privacy />

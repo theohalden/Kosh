@@ -21,7 +21,7 @@ export const viewport: Viewport = { themeColor: "#f7f5f0", width: "device-width"
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${instrument.variable} ${manrope.variable}`}>
-      <head><script dangerouslySetInnerHTML={{__html: "try{if(localStorage.getItem('tinward-motion')==='reduced')document.documentElement.dataset.motion='reduced'}catch(e){}"}} /></head>
+      <head><script dangerouslySetInnerHTML={{__html: "try{if(sessionStorage.getItem('tw-intro'))document.documentElement.classList.add('seen');else sessionStorage.setItem('tw-intro','1')}catch(e){document.documentElement.classList.add('seen')}"}} /></head>
       <body>{children}</body>
     </html>
   );
