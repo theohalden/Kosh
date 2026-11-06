@@ -90,3 +90,7 @@ The public site uses synthetic financial examples. Keep real messages, bank stat
 ## License
 
 [MIT](LICENSE). Third-party dependencies retain their respective licenses.
+
+## Homelab website deployment
+
+The static marketing preview is deployed independently from Android and the future signup backend. See [deployment and operations](deploy/README.md) for Docker Compose, Caddy, Quick Tunnel, rollback and security notes. Repository: https://github.com/theohalden/Tinward.

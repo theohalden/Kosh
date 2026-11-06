@@ -1,0 +1,25 @@
+# Allowlist: no Git metadata, Android data, env files, signing keys or local outputs.
+**
+!package.json
+!package-lock.json
+!scripts/
+!scripts/build-static.mjs
+!apps/
+!apps/web/
+!apps/web/package.json
+!apps/web/tsconfig.json
+!apps/web/next.config.ts
+!apps/web/postcss.config.mjs
+!apps/web/src/
+!apps/web/src/**
+!apps/web/public/
+!apps/web/public/**
+!deploy/
+!deploy/sites/
+!deploy/sites/tinward/
+!deploy/sites/tinward/nginx.conf
+**/.env*
+**/*.db
+**/*.db-*
+**/*.keystore
+**/*.jks

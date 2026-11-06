@@ -1,6 +1,7 @@
 import { MarketInit } from "@/components/MarketInit";
 import { Intro } from "@/components/Intro";
 import { Nav } from "@/components/Nav";
+import { Download } from "@/components/sections/Download";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/hero/Hero";
 import { Problem } from "@/components/sections/Problem";
@@ -32,6 +33,7 @@ export default function Home() {
       <Nav />
       <main id="main" tabIndex={-1} className="focus:outline-none">
         <Hero />
+        <Download />
         <Problem />
         <Showcase />
         <SmsTracking />
@@ -41,7 +43,7 @@ export default function Home() {
         <HowItWorks />
         <Privacy />
         <Pricing />
-        <EarlyAccess />
+        <EarlyAccess enabled={process.env.TINWARD_STATIC_EXPORT !== "1"} />
         <Faq />
       </main>
       <Footer />

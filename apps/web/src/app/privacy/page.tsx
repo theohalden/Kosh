@@ -8,12 +8,19 @@ export const metadata: Metadata = { title: "Privacy policy", description: "What 
 const H = ({ children }: { children: React.ReactNode }) => <h2 className="mt-12 text-3xl">{children}</h2>;
 
 export default function Privacy() {
+  const staticPreview = process.env.TINWARD_STATIC_EXPORT === "1";
   return (
     <StatusShell wide>
       <article className="[&_li]:mt-2 [&_p]:mt-4 [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:pl-6 text-[1.02rem] text-ink-2">
         <h1 className="text-5xl text-ink">Privacy policy</h1>
         <p>Last updated 5 November 2026. This covers two separate things: the <strong>website</strong> (this site) and the <strong>Android app</strong>.</p>
 
+        {staticPreview ? <>
+          <H>This website preview</H>
+          <p>Email signup, deletion forms and other account APIs are disabled on this static preview. We do not collect early-access email addresses or send emails from this deployment. Supabase and Resend are not connected.</p>
+          <p>The temporary HTTPS connection is provided by Cloudflare. Cloudflare and the hosting infrastructure process network requests, including IP addresses, to deliver and protect the website. There are no advertising trackers or financial-data uploads.</p>
+          <p>Downloading the APK takes you to GitHub, which handles that request under its own privacy policy.</p>
+        </> : <>
         <H>The website: early-access list</H>
         <p>When you join the list we store:</p>
         <ul>
@@ -33,6 +40,7 @@ export default function Privacy() {
         <h2 id="delete" className="mt-12 scroll-mt-24 text-3xl">Delete my data</h2>
         <p>Enter the address you signed up with. If it&apos;s on the list we&apos;ll email a confirmation link; clicking it permanently deletes your record. We show the same message either way so this form can&apos;t be used to check who is on the list.</p>
         <div className="mt-5"><DeletionRequest /></div>
+        </>}
 
         <H>The Android app</H>
         <p>The app is open source and, at the time of writing, still in early development. In the current code:</p>
@@ -46,7 +54,7 @@ export default function Privacy() {
         <p>You can verify this in the <a className="underline" href={REPO_URL} target="_blank" rel="noopener noreferrer">source code</a>. This section describes the code as of the date above and will be updated before any public release.</p>
 
         <H>Contact</H>
-        <p>For questions that don&apos;t involve personal data, open an issue on <a className="underline" href={`${REPO_URL}/issues`} target="_blank" rel="noopener noreferrer">GitHub</a>. For deletion, use the form above.</p>
+        <p>For questions that don&apos;t involve personal data, open an issue on <a className="underline" href={`${REPO_URL}/issues`} target="_blank" rel="noopener noreferrer">GitHub</a>. {staticPreview ? "Do not post personal financial information in public issues." : "For deletion, use the form above."}</p>
       </article>
     </StatusShell>
   );

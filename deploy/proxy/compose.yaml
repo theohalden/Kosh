@@ -1,0 +1,54 @@
+name: web-proxy
+services:
+  caddy:
+    image: caddy:2-alpine@sha256:f6228111e5fafa1a5238258d0858e103f10599b8d1659a146e7726681a002bb9
+    restart: unless-stopped
+    user: "1000:1000"
+    ports: ["127.0.0.1:8081:8080"]
+    volumes:
+      # Directory mount allows atomic Caddyfile replacement and hot reload.
+      - ./conf:/etc/caddy:ro
+    environment: {XDG_CONFIG_HOME: /tmp/config, XDG_DATA_HOME: /tmp/data}
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=16m,uid=1000,gid=1000,mode=1770"]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 64
+    mem_limit: 96m
+    cpus: 0.50
+    # Docker 29 needs a non-internal bridge to activate the loopback port mapping.
+    networks: [proxy, tunnel-egress]
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, "http://127.0.0.1:8080/proxy-healthz"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: json-file
+      options: {max-size: "5m", max-file: "2"}
+  quick-tunnel:
+    image: cloudflare/cloudflared:latest@sha256:4955524aeaa379e154023d5a027c250f7b35041a2e7e950cf13f144bc9b9c5ba
+    profiles: [tunnel]
+    # Explicitly temporary: no auto-restart across failures or VM reboots.
+    restart: "no"
+    user: "65532:65532"
+    command: [tunnel, --no-autoupdate, --protocol, http2, --metrics, "127.0.0.1:20241", --url, "http://caddy:8080"]
+    depends_on:
+      caddy: {condition: service_healthy}
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 64
+    mem_limit: 128m
+    cpus: 0.50
+    networks: [tunnel-egress]
+    logging:
+      driver: json-file
+      options: {max-size: "5m", max-file: "2"}
+networks:
+  proxy:
+    external: true
+    name: web-proxy
+  tunnel-egress:
+    enable_ipv6: false

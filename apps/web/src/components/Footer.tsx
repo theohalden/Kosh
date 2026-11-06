@@ -3,7 +3,7 @@ import { Logo } from "./Logo";
 
 const COLUMNS: { title: string; links: [string, string][] }[] = [
   { title: "Product", links: [["Features", "/#features"], ["How it works", "/#how"], ["Pricing", "/#pricing"]] },
-  { title: "Resources", links: [["FAQ", "/#faq"], ["Join the beta", "/#early-access"]] },
+  { title: "Resources", links: [["FAQ", "/#faq"], ["Download for Android", "/#download"]] },
   { title: "Legal", links: [["Privacy Policy", "/privacy"], ["Terms of Use", "/terms"]] },
 ];
 
@@ -16,7 +16,7 @@ export function Footer() {
             <Logo />
             <p className="footer-tagline">Your money. In perspective.</p>
             <p className="footer-sub">A more thoughtful way to understand your financial life.</p>
-            <Link href="/#early-access" className="btn btn-light footer-cta">Join the Android beta <span aria-hidden="true">↗</span></Link>
+            <Link href="/#download" className="btn btn-light footer-cta">Get Tinward for Android <span aria-hidden="true">↗</span></Link>
           </div>
           <nav aria-label="Footer" className="footer-cols">
             {COLUMNS.map((c) => (
