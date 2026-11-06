@@ -1,3 +1,5 @@
+> **Deployment is now automated: see [CICD.md](CICD.md).** The manual SSH/build steps below are the previous process, kept for history; `update.sh` and `activate.sh` were removed.
+
 # Portable static website hosting
 
 These are generic templates. Keep real hostnames, SSH identities, addresses,
