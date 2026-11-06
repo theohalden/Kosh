@@ -142,9 +142,16 @@ jobs:
         run: |
           set -u
           for i in $(seq 1 45); do
-            live="$(curl -fsS --max-time 10 "${SITE_URL}/version.json?ts=$(date +%s)" 2>/dev/null | jq -r .sha 2>/dev/null || true)"
+            code="$(curl -s -o /tmp/version.json -w '%{http_code}' --max-time 10 "${SITE_URL}/version.json?ts=$(date +%s)" || echo 000)"
+            live=""; [ "$code" = 200 ] && live="$(jq -r .sha /tmp/version.json 2>/dev/null || true)"
             if [ "$live" = "${GITHUB_SHA}" ]; then echo "Live: ${SITE_URL} is serving ${GITHUB_SHA}"; exit 0; fi
-            echo "[$i/45] live=${live:-unreachable} want=${GITHUB_SHA::12}"; sleep 20
+            case "$code" in
+              200) state="serving ${live:0:12}" ;;
+              404) state="site is up but still the previous build (no version marker yet); waiting for the VM to pick up the new image" ;;
+              000) state="no response from ${SITE_URL}" ;;
+              *)   state="HTTP $code" ;;
+            esac
+            echo "[$i/45] want ${GITHUB_SHA::12}; now: $state"; sleep 20
           done
           echo "::error::${SITE_URL} did not report ${GITHUB_SHA} within 15 minutes. Check 'journalctl -u tinward-update' on the VM; it rolls back automatically if the new container is unhealthy."
           exit 1
