@@ -13,10 +13,21 @@ android {
         applicationId = "dev.kosh.financetracker"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        if (providers.environmentVariable("KOSH_KEYSTORE_PATH").isPresent) {
+            create("distribution") {
+                storeFile = file(providers.environmentVariable("KOSH_KEYSTORE_PATH").get())
+                storePassword = providers.environmentVariable("KOSH_KEYSTORE_PASSWORD").get()
+                keyAlias = providers.environmentVariable("KOSH_KEY_ALIAS").get()
+                keyPassword = providers.environmentVariable("KOSH_KEY_PASSWORD").get()
+            }
+        }
     }
 
     buildTypes {
@@ -27,6 +38,7 @@ android {
             matchingFallbacks += listOf("debug")
         }
         release {
+            signingConfig = signingConfigs.findByName("distribution")
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }

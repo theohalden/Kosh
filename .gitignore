@@ -9,6 +9,7 @@ captures/
 local.properties
 *.apk
 *.keystore
+.signing/
 !debug.keystore
 
 # Never commit pulled device data — may contain real personal financial info.
@@ -28,3 +29,9 @@ node_modules/
 *.tsbuildinfo
 next-env.d.ts
 .dev-data/
+
+# Isolated marketing-only static export.
+.static-site/
+
+# Host-specific infrastructure notes must remain private.
+.private-deployment/

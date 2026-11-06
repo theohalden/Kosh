@@ -255,3 +255,4 @@ details.faq:hover summary>span:last-child{background:var(--color-ink);color:var(
 .sc-tabs button:hover{color:var(--color-ink);}
 .sc-controls>button{transition:background 200ms,transform 250ms var(--ease-out-quint);}.sc-controls>button:active{transform:scale(.9);}
 @media(prefers-reduced-motion:reduce){.tilt{transform:none!important;}.brand-mark *{transition:none!important;}}
+.pricing-soon{margin-top:auto;min-height:40px;display:inline-flex;align-items:center;font-size:.78rem;font-weight:700;opacity:.65;}

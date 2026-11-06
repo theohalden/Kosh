@@ -1,0 +1,17 @@
+{
+	auto_https off
+	admin localhost:2019
+}
+:8080 {
+	# Site containers remain private; route by Docker DNS name.
+	handle /proxy-healthz {
+		respond "ok" 200
+	}
+	handle {
+		reverse_proxy tinward-web:8080 {
+			# This preview needs no client IP, forwarded host or external URL.
+			header_up -X-Forwarded-For
+			header_up -X-Forwarded-Host
+		}
+	}
+}

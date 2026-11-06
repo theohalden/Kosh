@@ -12,7 +12,7 @@ export function Hero() {
         <h1 id="hero-heading" className="hero-heading">All your money.<br/><em>In perspective.</em></h1>
         <p className="hero-sub">The little things you spend. The money you set aside.<br className="hero-break"/> The plans you’re working towards.</p>
         <p className="hero-description">Tinward brings your financial life into focus, so you can understand where you stand and make more of what you have.</p>
-        <div className="hero-actions"><a href="#early-access" className="btn btn-primary">Join the Android beta <span className="cta-arrow" aria-hidden="true">↗</span></a><a href="#product" className="hero-link">Discover Tinward <span aria-hidden="true">↓</span></a></div>
+        <div className="hero-actions"><a href="#download" className="btn btn-primary">Get Tinward for Android <span className="cta-arrow" aria-hidden="true">↗</span></a><a href="#product" className="hero-link">Discover Tinward <span aria-hidden="true">↓</span></a></div>
         <p className="hero-note"><span aria-hidden="true"/>Personal finance, made simpler.</p>
       </div>
       <div className="hero-product">
