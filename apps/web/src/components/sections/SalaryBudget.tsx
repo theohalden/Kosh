@@ -4,8 +4,10 @@ import { Reveal, PlannedChip } from "../Reveal";
 import { useInView } from "@/lib/useInView";
 import { month, plan, sum } from "@/content/sample";
 import { money } from "@/lib/format";
+import { useMarket } from "@/lib/market";
 
 export function SalaryBudget() {
+  useMarket();
   const [ref, seen] = useInView<HTMLDivElement>(0.25);
   const planned = sum(plan.map((p) => ({ value: p.plan })));
   const buffer = month.income - planned;
@@ -15,14 +17,14 @@ export function SalaryBudget() {
       <div className="shell section">
         <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
           <div>
-            <div className="flex items-center gap-5"><Reveal><span className="eyebrow">Budgets and goals</span></Reveal><PlannedChip /></div>
-            <Reveal delay={80}><h2 id="salary-h" className="h2 mt-6">Know what’s left after life happens.</h2></Reveal>
+            <div className="flex items-center gap-5"><Reveal><span className="eyebrow">A little more intention</span></Reveal><PlannedChip /></div>
+            <Reveal delay={80}><h2 id="salary-h" className="h2 mt-6">Make room for what matters.</h2></Reveal>
             <Reveal delay={160}>
-              <p className="lead mt-8">The balance in your account isn’t all available to spend. Tinward’s planned budget view will set aside bills, repayments and savings goals, so you can see what is genuinely left.</p>
+              <p className="lead mt-8">A budget shouldn’t feel like a punishment. It’s a way to understand what you have available, what needs taking care of, and what you’d like to save for. Tinward helps you build a more thoughtful relationship with everyday spending, one decision at a time.</p>
             </Reveal>
             <Reveal delay={220}>
               <ul className="mt-10 grid gap-3 border-t border-line pt-6 text-[0.98rem] text-ink-2">
-                {["Account for bills and loan payments before you spend", "Plan around your actual income", "Savings treated as a commitment, not a leftover"].map((t) => (
+                {["Plan your spending. Give everyday categories a little more structure.", "Keep commitments in sight. Make recurring expenses part of the picture.", "See what’s left. Understand how your spending compares with your plan."].map((t) => (
                   <li key={t} className="flex gap-3"><span className="mt-2.5 h-px w-4 flex-none bg-ink" aria-hidden="true" />{t}</li>
                 ))}
               </ul>

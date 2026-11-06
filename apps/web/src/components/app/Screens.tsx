@@ -1,8 +1,10 @@
+"use client";
 import type { CSSProperties } from "react";
 import { Icon } from "./Icon";
 import { NavBar, PhoneBody, type Tab } from "./AppPhone";
 import { activity, leftToSpend, month, netWorth, plan, holdings, snapshots, sum, upcomingTotal, type Activity } from "@/content/sample";
 import { money } from "@/lib/format";
+import { useMarket } from "@/lib/market";
 
 const amount = (n: number) => money(n);
 const GOLD = "#d5a64f", GREEN = "#b7d5ae", TEXT = "#f7f5f0";
@@ -17,6 +19,7 @@ function Bar({ title }: { title?: string }) {
 }
 
 export function ActivityRow({ a }: { a: Activity }) {
+  useMarket();
   const cls = a.kind === "in" ? "in" : a.kind === "transfer" ? "tr" : "";
   return (
     <div className="ui-row">
@@ -29,6 +32,7 @@ export function ActivityRow({ a }: { a: Activity }) {
 
 /* ───────── A · Home ───────── */
 export function HomeBody({ k }: { k?: number }) {
+  useMarket();
   const style = k === undefined ? undefined : ({ "--k": k } as CSSProperties);
   return (
     <PhoneBody>
@@ -78,6 +82,7 @@ export const HomeScreen = () => (<><HomeBody /><NavBar active="home" /></>);
 
 /* ───────── B · Activity ───────── */
 export function ActivityBody({ days = 4 }: { days?: number }) {
+  useMarket();
   return (
     <PhoneBody>
       <Bar title="Activity" />
@@ -99,6 +104,7 @@ export const ActivityScreen = () => (<><ActivityBody /><NavBar active="activity"
 
 /* ───────── C · Plan ───────── */
 export function PlanBody({ k }: { k?: number }) {
+  useMarket();
   const style = k === undefined ? undefined : ({ "--k": k } as CSSProperties);
   const planned = sum(plan.map((p) => ({ value: p.plan })));
   return (
@@ -128,6 +134,7 @@ export const PlanScreen = () => (<><PlanBody /><NavBar active="plan" /></>);
 
 /* ───────── D · Wealth ───────── */
 export function WealthBody({ k }: { k?: number }) {
+  useMarket();
   const style = k === undefined ? undefined : ({ "--k": k } as CSSProperties);
   const A = sum(netWorth.assets), L = sum(netWorth.liabilities);
   const W = 100, H = 30;

@@ -1,10 +1,10 @@
 import { Reveal } from "../Reveal";
 
 const STEPS = [
-  { n: "01", title: "Get your invitation", body: "When the Android beta opens, we’ll email you. There’s no download yet, and we won’t offer one until a properly tested release exists." },
-  { n: "02", title: "Let Tinward read, or import", body: "Import a supported statement, allow supported message access, or add a transaction manually. Format coverage is limited; not every bank or region is supported." },
-  { n: "03", title: "Settle the few it’s unsure about", body: "Tinward files what it recognises. Uncertain purposes and categories need review. Choose a category once and it sticks for that merchant." },
-  { n: "04", title: "Watch the month make sense", body: "Follow your spending as it happens. Planning, investments and net worth join as those features arrive." },
+  { n: "01", title: "Start with what you know.", body: "Choose your currency and add the financial details you want to track." },
+  { n: "02", title: "Make it a habit.", body: "Record your everyday activity and organize it in a way that makes sense to you." },
+  { n: "03", title: "See the patterns.", body: "Review your spending, keep your plans in view, and understand your financial position." },
+  { n: "04", title: "Keep moving forward.", body: "Return whenever you need a clearer perspective on your money." },
 ];
 
 export function HowItWorks() {
@@ -12,8 +12,8 @@ export function HowItWorks() {
     <section id="how" className="shell section border-t border-line" aria-labelledby="how-h">
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
         <div>
-          <Reveal><span className="eyebrow">How it works</span></Reveal>
-          <Reveal delay={80}><h2 id="how-h" className="h2 mt-6">Four small steps.</h2></Reveal>
+          <Reveal><span className="eyebrow">Beautifully straightforward</span></Reveal>
+          <Reveal delay={80}><h2 id="how-h" className="h2 mt-6">Small steps. A clearer picture.</h2></Reveal>
         </div>
         <ol className="divide-y divide-line border-y border-line">
           {STEPS.map((s, i) => (

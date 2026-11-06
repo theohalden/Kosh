@@ -57,9 +57,9 @@ export function EarlyAccess() {
       <div className="shell section">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <div>
-            <span className="eyebrow !text-paper/60">Early access</span>
-            <h2 id="ea-h" className="h2 mt-6">Be here for the clearer picture.</h2>
-            <p className="mt-8 max-w-md text-[1.12rem] leading-relaxed text-paper/75">Help shape a more thoughtful way to understand your money. Join the list for an invitation when the Android beta is ready. No launch promises. No payment details.</p>
+            <span className="eyebrow !text-paper/60">Take a clearer view</span>
+            <h2 id="ea-h" className="h2 mt-6">Your money, a little more understood.</h2>
+            <p className="mt-8 max-w-md text-[1.12rem] leading-relaxed text-paper/75">There’s something reassuring about knowing where you stand. Start building that understanding with Tinward. Made for Android. Designed for everyday life. Add your email and we’ll send your invitation when the Android beta is ready.</p>
             <ul className="mt-8 grid gap-3 text-[0.98rem] text-paper/80">
               {["A confirmation email, then your invitation. Product news only if you opt in.", "We never ask for bank details, a phone number or your messages here", "Unsubscribe or delete your details whenever you like"].map((t) => (
                 <li key={t} className="flex gap-3"><svg width="18" height="18" viewBox="0 0 18 18" className="mt-1 flex-none" aria-hidden="true"><path d="M3 9.5 7 13.5l8-9" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>{t}</li>
@@ -89,7 +89,7 @@ export function EarlyAccess() {
               </div>
             ) : (
               <form onSubmit={onSubmit} noValidate aria-describedby={`${id}-fine`}>
-                <h3 className="text-[2rem]">Join the early-access list</h3>
+                <h3 className="text-[2rem]">Join the Android beta</h3>
                 <div className="mt-6">
                   <label htmlFor={`${id}-email`} className="block text-sm font-extrabold">Email address <span className="font-medium text-ink-2">(required)</span></label>
                   <input
@@ -122,7 +122,7 @@ export function EarlyAccess() {
                 </label>
 
                 <button type="submit" disabled={loading} className="btn btn-primary mt-7 w-full">
-                  {loading ? (<><svg className="animate-spin" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" strokeOpacity=".3" strokeWidth="3" /><path d="M10 2a8 8 0 0 1 8 8" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" /></svg>Joining…</>) : (<>Join early access <span aria-hidden="true">↗</span></>)}
+                  {loading ? (<><svg className="animate-spin" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" strokeOpacity=".3" strokeWidth="3" /><path d="M10 2a8 8 0 0 1 8 8" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" /></svg>Joining…</>) : (<>Join the Android beta <span aria-hidden="true">↗</span></>)}
                 </button>
 
                 <div aria-live="assertive" className="min-h-0">

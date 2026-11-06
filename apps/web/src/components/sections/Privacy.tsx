@@ -1,5 +1,4 @@
 import { Reveal } from "../Reveal";
-import { REPO_URL } from "@/content/site";
 
 const FACTS = [
   { k: "It stays on your phone", v: "Your transactions, the original message text and the categories you’ve chosen live in a database on your device." },
@@ -23,12 +22,12 @@ export function Privacy() {
       <div className="shell section">
         <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <Reveal><span className="eyebrow !text-paper/60">Privacy and trust</span></Reveal>
-            <Reveal delay={80}><h2 id="privacy-h" className="h2 mt-6">Your money stays on your phone.</h2></Reveal>
-            <Reveal delay={160}><p className="lead mt-8 !text-paper/70">Tinward is local-first, and you don’t have to take our word for it: the app is open source, so every claim here points at real code.</p></Reveal>
+            <Reveal><span className="eyebrow !text-paper/60">Built around your privacy</span></Reveal>
+            <Reveal delay={80}><h2 id="privacy-h" className="h2 mt-6">Your money stays your business.</h2></Reveal>
+            <Reveal delay={160}><p className="lead mt-8 !text-paper/70">Your financial information is personal. The experience of managing it should respect that. Tinward takes a local-first approach, designed to help you manage your financial records without requiring a connection to your bank. The app is open source, so every claim here points at real code.</p></Reveal>
             <Reveal delay={220}>
-              <a href={`${REPO_URL}/blob/main/apps/android/app/src/main/AndroidManifest.xml`} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex min-h-11 items-center gap-2 border-b border-paper/50 pb-1 font-bold text-paper no-underline hover:border-paper">
-                Read the permissions on GitHub <span aria-hidden="true">↗</span><span className="sr-only">(opens in a new tab)</span>
+              <a href="/privacy" className="mt-8 inline-flex min-h-11 items-center gap-2 border-b border-paper/50 pb-1 font-bold text-paper no-underline hover:border-paper">
+                Explore our privacy approach <span aria-hidden="true">→</span>
               </a>
             </Reveal>
           </div>

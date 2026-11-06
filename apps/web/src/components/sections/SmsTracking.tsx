@@ -19,10 +19,17 @@ export function SmsTracking() {
       <div className="shell section">
         <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
           <div>
-            <Reveal><span className="eyebrow">Expense tracking</span></Reveal>
-            <Reveal delay={80}><h2 className="h2 mt-6">From scattered records to a useful story.</h2></Reveal>
+            <Reveal><span className="eyebrow">The everyday, made clear</span></Reveal>
+            <Reveal delay={80}><h2 className="h2 mt-6">Finally, a clearer picture of where your money goes.</h2></Reveal>
             <Reveal delay={160}>
-              <p className="lead mt-8">When a supported bank sends a transaction message, Tinward can turn it into a useful record on your phone. Amount, account and purpose, with room to review what it can’t know.</p>
+              <p className="lead mt-8">Coffee on Monday. Groceries on Wednesday. That subscription you almost forgot about. Little decisions add up. Tinward makes your income and expenses easier to record, organize and understand, so you can see the patterns behind your spending.</p>
+            </Reveal>
+            <Reveal delay={200}>
+              <ul className="mt-8 grid gap-3 text-[0.98rem] text-ink-2">
+                {["Keep income and expenses in one place.", "Organize transactions into meaningful categories.", "Look back at how your money moved over time."].map((t) => (
+                  <li key={t} className="flex gap-3"><span className="mt-2.5 h-px w-4 flex-none bg-ink" aria-hidden="true" />{t}</li>
+                ))}
+              </ul>
             </Reveal>
             <Reveal delay={220}><div className="mt-8"><LiveChip /></div></Reveal>
             <Reveal delay={260}>
@@ -39,7 +46,7 @@ export function SmsTracking() {
                 {SAMPLES.map((m, idx) => {
                   const on = idx === i;
                   return (
-                    <button key={m.id} role="radio" aria-checked={on} tabIndex={on ? 0 : -1} onKeyDown={e => radioKeys(e, idx, SAMPLES.length, setI)} onClick={() => setI(idx)} className={`rounded-[10px] border px-4 py-3.5 text-left transition-colors ${on ? "border-ink bg-card" : "border-line hover:border-ink-3"}`}>
+                    <button key={m.id} role="radio" aria-checked={on} tabIndex={on ? 0 : -1} onKeyDown={e => radioKeys(e, idx, SAMPLES.length, setI)} onClick={() => setI(idx)} className={`sample-card rounded-[10px] border px-4 py-3.5 text-left transition-colors ${on ? "border-ink bg-card" : "border-line hover:border-ink-3"}`}>
                       <span className="block text-[0.7rem] font-bold tracking-wider text-ink-3">{m.sender}</span>
                       <span className="mt-1 block font-mono text-[0.82rem] leading-snug text-ink-2">{m.text}</span>
                     </button>
@@ -48,7 +55,7 @@ export function SmsTracking() {
               </div>
               <div className="mt-3 rounded-[14px] bg-ink p-6 text-paper sm:p-8" aria-live="polite">
                 <p className="text-sm font-bold text-paper/55">How the current parser organises it</p>
-                <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3">
+                <dl key={s.id} className="parsed mt-5 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3">
                   {Object.entries(s.parsed).map(([k, v]) => (
                     <div key={k}>
                       <dt className="text-xs font-semibold text-paper/50">{k}</dt>

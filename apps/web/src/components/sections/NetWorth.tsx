@@ -4,10 +4,12 @@ import { Reveal, PlannedChip } from "../Reveal";
 import { useInView } from "@/lib/useInView";
 import { netWorth, sum } from "@/content/sample";
 import { money } from "@/lib/format";
+import { useMarket } from "@/lib/market";
 
 const H = 340;
 
 export function NetWorth() {
+  useMarket();
   const [ref, seen] = useInView<HTMLDivElement>(0.35);
   const A = sum(netWorth.assets);
   const L = sum(netWorth.liabilities);
@@ -33,12 +35,12 @@ export function NetWorth() {
       <div className="shell section">
         <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
           <div>
-            <div className="flex items-center gap-5"><Reveal><span className="eyebrow">Net worth</span></Reveal><PlannedChip /></div>
-            <Reveal delay={80}><h2 id="nw-h" className="h2 mt-6">Everything you own, minus what you owe.</h2></Reveal>
+            <div className="flex items-center gap-5"><Reveal><span className="eyebrow">There’s more to your money</span></Reveal><PlannedChip /></div>
+            <Reveal delay={80}><h2 id="nw-h" className="h2 mt-6">Everything you own. Everything you owe.</h2></Reveal>
             <Reveal delay={160}>
-              <p className="lead mt-8">One number for where you stand today. And month after month, a quiet answer to the question underneath all the others: am I moving in the right direction?</p>
+              <p className="lead mt-8">Your financial life extends beyond your bank balance. Savings. Investments. Things of value. Outstanding debt. Tinward is designed to help you bring these pieces together and see your overall financial position in one place. Because knowing your net worth means understanding both sides of the equation.</p>
             </Reveal>
-            <Reveal delay={220}><p className="mt-8 max-w-md border-t border-line pt-5 text-[0.95rem] text-ink-2">The planned view brings recorded account balances, asset values and liabilities together. A snapshot, only as current as your last update.</p></Reveal>
+            <Reveal delay={220}><p className="mt-8 max-w-md border-t border-line pt-5 text-[0.95rem] text-ink-2">A more complete picture of your money, maintained by you. Stocks, funds, retirement accounts, gold or a loan you gave: add a holding, update its value when you check it. Manual by design, with no broker connection or live prices, and only as current as your last update.</p></Reveal>
           </div>
 
           <div ref={ref}>
