@@ -1,12 +1,8 @@
 name: tinward
 services:
   web:
-    image: ${TINWARD_IMAGE:?Set TINWARD_IMAGE to an immutable release tag}
-    build:
-      context: ${TINWARD_SOURCE:-./source}
-      dockerfile: deploy/sites/tinward/Dockerfile
-      args:
-        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
+    # Built and published by CI (.github/workflows/deploy.yml); the VM updater sets an immutable digest.
+    image: ${TINWARD_IMAGE:?Set TINWARD_IMAGE to an immutable image digest}
     restart: unless-stopped
     user: "101:101"
     read_only: true

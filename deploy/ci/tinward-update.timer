@@ -1,0 +1,11 @@
+[Unit]
+Description=Check for a new Tinward website image every minute
+
+[Timer]
+OnBootSec=90s
+OnUnitInactiveSec=60s
+RandomizedDelaySec=10s
+AccuracySec=5s
+
+[Install]
+WantedBy=timers.target

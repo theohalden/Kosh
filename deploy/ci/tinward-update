@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+# Pull the newest Tinward image published by CI and, if it is new and healthy, switch the running container to it.
+# Runs on the website VM every minute (tinward-update.timer). Outbound-only: nothing connects in.
+# A new image that fails to start healthy is rolled back automatically and never retried.
+set -euo pipefail
+
+IMAGE_REPO="${IMAGE_REPO:-ghcr.io/theohalden/tinward-web}"   # the only image this script will ever deploy
+TAG="${TAG:-main}"
+SITE="${SITE:-/opt/web-hosting/sites/tinward}"
+STATE="${STATE:-/var/lib/tinward-updater}"
+PROXY_URL="${PROXY_URL:-http://127.0.0.1:8081}"              # Caddy, which fronts the site container
+WAIT_TIMEOUT="${WAIT_TIMEOUT:-60}"
+KEEP="${KEEP:-3}"
+SKIP_PULL="${SKIP_PULL:-0}"                                  # tests only
+export DOCKER_CONFIG="${DOCKER_CONFIG:-$STATE/docker}"       # anonymous pulls: no credentials are ever stored
+
+mkdir -p "$STATE" "$DOCKER_CONFIG"
+
+if [[ "${1:-}" == "--status" ]]; then
+  echo "running image : $(grep '^TINWARD_IMAGE=' "$SITE/.env" 2>/dev/null | cut -d= -f2-)"
+  for f in last-check last-deployed last-error bad-digest; do printf '%-14s: %s\n' "$f" "$(cat "$STATE/$f" 2>/dev/null || echo -)"; done
+  printf 'live version  : %s\n' "$(curl -fsS --max-time 5 "$PROXY_URL/version.json" 2>/dev/null | tr -d '\n' || echo unreachable)"
+  exit 0
+fi
+
+exec 9>"${LOCK:-/run/tinward-updater.lock}"
+flock -n 9 || { echo "another update is running"; exit 0; }
+now() { date -u +%Y-%m-%dT%H:%M:%SZ; }
+
+if [[ "$SKIP_PULL" != 1 ]]; then
+  if ! docker pull -q "$IMAGE_REPO:$TAG" >/dev/null 2>"$STATE/pull.err"; then
+    echo "$(now) pull failed: $(tr -d '\n' < "$STATE/pull.err" | cut -c1-200)" > "$STATE/last-error"
+    echo "registry unreachable or image not public; will retry next run"
+    exit 0   # transient by design; the error is recorded and shown by --status
+  fi
+fi
+echo "$(now)" > "$STATE/last-check"
+
+digest="$(docker image inspect --format '{{range .RepoDigests}}{{println .}}{{end}}' "$IMAGE_REPO:$TAG" | grep -m1 "^${IMAGE_REPO}@sha256:" || true)"
+[[ -n "$digest" ]] || { echo "cannot resolve a digest for $IMAGE_REPO:$TAG"; exit 0; }
+[[ "$digest" =~ ^[a-z0-9./_-]+@sha256:[0-9a-f]{64}$ ]] || { echo "unexpected digest format"; exit 1; }
+
+current="$(grep '^TINWARD_IMAGE=' "$SITE/.env" 2>/dev/null | cut -d= -f2- || true)"
+[[ "$digest" != "$current" ]] || exit 0
+[[ "$digest" != "$(cat "$STATE/bad-digest" 2>/dev/null || true)" ]] || { echo "skipping known-bad $digest"; exit 0; }
+
+echo "New image: $digest (was: ${current:-none})"
+# Validate the new image's config in isolation before touching the running site.
+docker run --rm --read-only --tmpfs /tmp:uid=101,gid=101,size=16m --network none --cap-drop ALL \
+  --security-opt no-new-privileges "$digest" -t >/dev/null 2>&1 || { echo "$digest" > "$STATE/bad-digest"; echo "image failed its config test; not deploying" >&2; exit 1; }
+
+compose=(docker compose --project-directory "$SITE" -f "$SITE/compose.yaml")
+[[ ! -f "$SITE/.env" ]] || cp -f "$SITE/.env" "$SITE/.env.previous"
+printf 'TINWARD_IMAGE=%s\n' "$digest" > "$SITE/.env.next"
+mv -f "$SITE/.env.next" "$SITE/.env"
+
+healthy() {
+  "${compose[@]}" up -d --no-deps --wait --wait-timeout "$WAIT_TIMEOUT" web >/dev/null 2>&1 || return 1
+  curl -fsS --max-time 5 "$PROXY_URL/healthz" >/dev/null 2>&1 || return 1
+  local page; page="$(curl -fsS --max-time 5 "$PROXY_URL/" 2>/dev/null)" || return 1
+  [[ "$page" == *"<html"* ]]
+}
+
+if healthy; then
+  echo "$digest $(now) sha=$(curl -fsS --max-time 5 "$PROXY_URL/version.json" 2>/dev/null | tr -d '\n ')" > "$STATE/last-deployed"
+  rm -f "$STATE/bad-digest" "$STATE/last-error"
+  echo "Deployed $digest"
+  # Keep the newest few images of this repo for quick manual rollback; never touch other images.
+  docker images --filter "reference=${IMAGE_REPO}" --format '{{.ID}}' | awk '!s[$0]++' | tail -n +"$((KEEP + 1))" | xargs -r docker rmi >/dev/null 2>&1 || true
+  exit 0
+fi
+
+echo "New release is NOT healthy; rolling back" >&2
+echo "$digest" > "$STATE/bad-digest"
+echo "$(now) rolled back from $digest" > "$STATE/last-error"
+if [[ -f "$SITE/.env.previous" ]]; then
+  cp -f "$SITE/.env.previous" "$SITE/.env"
+  "${compose[@]}" up -d --no-deps --wait --wait-timeout "$WAIT_TIMEOUT" web >/dev/null 2>&1 \
+    && echo "Previous release restored" >&2 || echo "ROLLBACK ALSO FAILED: manual attention needed" >&2
+fi
+exit 1
